@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+ Aswani
+
+  Created by Aswani on 11/26/20.
+  Copyright © 2020 Aswani. All rights reserved.
+*/
+
+"recipes.header.title" = "Recipes";
+"alert.error.title" = "Something went wrong";
+"alert.category.selected.message" = "Try %@ category";
+"general.button.ok.title" = "OK";
+"general.button.refresh.title" = "Refresh";
+
+// MARK: - Error Messages
+"service.response.session.error" = "Please try again! ";
+"service.response.api.error" = "API error - ";
+"service.response.parsing.error" =  "Parsing error";
+"service.response.missing.data.error" = "Missing data error";
+"service.request.error" = "Error in request";
+"service.request.internal.server.error" = "Internal server error.";
+"service.request.try.again" = "Please try again!";
+"service.request.session.timeout" = "Session timeout.";
+"service.request.page.not.found" = "Page not found.";
