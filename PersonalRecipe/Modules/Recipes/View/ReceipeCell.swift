@@ -12,14 +12,12 @@ class RecipeCell: UICollectionViewCell {
     
     var recipeImageView = UIImageView()
     var recipeTitleLabel = UILabel()
+    var authorLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityIdentifier = "recipeCell"
         translatesAutoresizingMaskIntoConstraints = false
-        [recipeImageView, recipeTitleLabel].forEach {
-            $0?.translatesAutoresizingMaskIntoConstraints = false
-        }
         setUpViews()
         setUpLayout()
     }
@@ -43,23 +41,25 @@ class RecipeCell: UICollectionViewCell {
     // MARK: - Private Methods
     
     private func setUpViews() {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "placeholder")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        recipeImageView = imageView
+        [recipeImageView, recipeTitleLabel, authorLabel].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+        }
+        recipeImageView.image = UIImage(named: "placeholder")
+        recipeImageView.contentMode = .scaleAspectFit
         recipeImageView.accessibilityIdentifier = "recipeImageView"
         addSubview(recipeImageView)
 
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 18)
-        recipeTitleLabel = label
+        [recipeTitleLabel, authorLabel].forEach {
+            $0.numberOfLines = 0
+            $0.textAlignment = .center
+            $0.textColor = .black
+            $0.font = .boldSystemFont(ofSize: 18)
+        }
         recipeTitleLabel.accessibilityIdentifier = "recipeTitleLabel"
         addSubview(recipeTitleLabel)
+        
+        authorLabel.accessibilityIdentifier = "authorLabel"
+        addSubview(authorLabel)
     }
         
     private func setUpLayout() {
@@ -78,8 +78,10 @@ class RecipeCell: UICollectionViewCell {
             recipeImageView.heightAnchor.constraint(equalTo: widthAnchor),
             recipeTitleLabel.leftAnchor.constraint(equalTo: recipeImageView.leftAnchor),
             recipeTitleLabel.rightAnchor.constraint(equalTo: recipeImageView.rightAnchor),
-            recipeTitleLabel.topAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: CGFloat(spacing))
+            recipeTitleLabel.topAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: CGFloat(spacing)),
+            authorLabel.leftAnchor.constraint(equalTo: recipeTitleLabel.leftAnchor),
+            authorLabel.rightAnchor.constraint(equalTo: recipeTitleLabel.rightAnchor),
+            authorLabel.topAnchor.constraint(equalTo: recipeTitleLabel.bottomAnchor, constant: CGFloat(spacing))
         ])
-        
     }
 }

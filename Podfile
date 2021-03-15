@@ -6,7 +6,6 @@ target 'PersonalRecipe' do
   use_frameworks!
 
   # Pods for PersonalRecipe
-  pod 'AlamofireImage'
   pod 'SwiftLint'
 
   target 'PersonalRecipeTests' do

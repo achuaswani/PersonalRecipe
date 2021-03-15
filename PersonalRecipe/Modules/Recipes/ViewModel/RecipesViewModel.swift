@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class RecipesViewModel {
     let serviceManager: ServiceManagerType
@@ -23,9 +22,15 @@ class RecipesViewModel {
     
     let navigationBarTitle: String = "recipes.header.title".localized()
     var emptyMessage: String = ""
-        
+    var itemsPerBatch = 10
+    var start: Int = 0
+    var currentRow : Int = 9
+    var url: String {
+        "\(AppConstants.RECIPES)/start/\(start)/end/\(currentRow)"
+    }
+
     // update the collectionview whenever the value changes
-    private var recipeList: [Recipe] = [Recipe]() {
+    private(set) var recipeList: [Recipe] = [Recipe]() {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.recipesCollectionViewReloadClosure?()
@@ -78,6 +83,10 @@ class RecipesViewModel {
     }
     
     func fetchRecipes() {
+        guard loadingState != .loading else {
+            return
+        }
+        
         loadingState = .loading
         let recipeResponseHandler = { [weak self] (result: Result<[Recipe], APIError>) in
             guard let self = self else {
@@ -85,7 +94,7 @@ class RecipesViewModel {
             }
             switch result {
             case .success(let recipes):
-                self.recipeList = recipes
+                self.recipeList += recipes
             case .failure(let error):
                 self.errorViewModel = ErrorViewModel(
                     title: "service.request.try.again".localized(),
@@ -98,7 +107,13 @@ class RecipesViewModel {
             }
             self.loadingState = .completed
         }
-        serviceManager.makeRequest(path: AppConstants.RECIPES, completionHandler: recipeResponseHandler)
+        serviceManager.getRequest(path: url, completionHandler: recipeResponseHandler)
+    }
+    
+    func updateNextSet() {
+        start += itemsPerBatch
+        currentRow += start
+        fetchRecipes()
     }
     
     func addNewRecipe() {
@@ -110,13 +125,12 @@ class RecipesViewModel {
             fatalError("Expected cell type recipeCell")
         }
         let recipeItem = recipeList[indexPath.row]
-        cell.recipeTitleLabel.text = recipeItem.title
-       
-        if let image = recipeItem.image,
-           let recipeImageURL = URL(string: image) {
-            let placeholderImage = UIImage(named: "placeholder")
-            cell.recipeImageView.af.setImage(withURL: recipeImageURL, placeholderImage: placeholderImage)
+        if let image = recipeItem.image { 
+            cell.recipeImageView.setImage(urlstring: image, placeholder: UIImage(named: "placeholder"))
         }
+        cell.recipeTitleLabel.text = recipeItem.title
+        cell.authorLabel.text = recipeItem.author
+       
         return cell
     }
     

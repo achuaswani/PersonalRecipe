@@ -34,15 +34,15 @@ extension Endpoint {
         Endpoint(path: path)
     }
     
-    static func search(
-        for query: String,
-        maxResultCount: Int = 100
-    ) -> Self {
+    static func fetch(_ path: String, _ start: Int, _ limit: Int) -> Self {
         Endpoint(
-            path: "search/\(query)",
+            path: path,
             queryItems: [URLQueryItem(
-                name: "count",
-                value: String(maxResultCount)
+                name: "start",
+                value: String(start)
+            ), URLQueryItem(
+                name: "limit",
+                value: String(limit)
             )]
         )
     }

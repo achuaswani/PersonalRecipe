@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		5B0CA95925D1208A003257DF /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0CA95825D1208A003257DF /* NetworkExtension.framework */; };
 		5B0CA97025D1399A003257DF /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CA96F25D1399A003257DF /* AddRecipeViewController.swift */; };
 		5B0CA97525D139A4003257DF /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CA97425D139A4003257DF /* AddRecipeViewModel.swift */; };
+		5B79EF3025F589710090AD8B /* RecipeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79EF2F25F589710090AD8B /* RecipeCellViewModel.swift */; };
+		5B955C4825F2D12A005B9669 /* ImageView+Exension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B955C4725F2D12A005B9669 /* ImageView+Exension.swift */; };
 		5BEE0DCB25B21E7D00F4158F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEE0DCA25B21E7D00F4158F /* AppDelegate.swift */; };
 		5BEE0DCD25B21E7D00F4158F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEE0DCC25B21E7D00F4158F /* SceneDelegate.swift */; };
 		5BEE0DD425B21E7D00F4158F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BEE0DD325B21E7D00F4158F /* Assets.xcassets */; };
@@ -65,6 +67,8 @@
 		5B0CA95825D1208A003257DF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		5B0CA96F25D1399A003257DF /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		5B0CA97425D139A4003257DF /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
+		5B79EF2F25F589710090AD8B /* RecipeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellViewModel.swift; sourceTree = "<group>"; };
+		5B955C4725F2D12A005B9669 /* ImageView+Exension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Exension.swift"; sourceTree = "<group>"; };
 		5BEE0DC725B21E7D00F4158F /* PersonalRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BEE0DCA25B21E7D00F4158F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BEE0DCC25B21E7D00F4158F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,8 +204,8 @@
 				5BEE0E2825B2230600F4158F /* Utils */,
 				5BEE0E4025B2231800F4158F /* Library */,
 				5BEE0E3625B2230E00F4158F /* Services */,
-				5BEE0E1B25B2230000F4158F /* en.lproj */,
 				5BEE0E1525B222F600F4158F /* Models */,
+				5BEE0E1B25B2230000F4158F /* en.lproj */,
 				5BEE0E0625B222E700F4158F /* Modules */,
 				5BEE0DCC25B21E7D00F4158F /* SceneDelegate.swift */,
 				5BEE0DCA25B21E7D00F4158F /* AppDelegate.swift */,
@@ -252,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				5BEE0E0925B222E700F4158F /* RecipesViewModel.swift */,
+				5B79EF2F25F589710090AD8B /* RecipeCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				5BEE0E2B25B2230600F4158F /* DeviceType.swift */,
 				5BEE0E2C25B2230600F4158F /* AppConstants.swift */,
 				5BEE0E2D25B2230600F4158F /* Endpoint.swift */,
+				5B955C4725F2D12A005B9669 /* ImageView+Exension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -338,7 +344,6 @@
 				5BEE0DC325B21E7D00F4158F /* Sources */,
 				5BEE0DC425B21E7D00F4158F /* Frameworks */,
 				5BEE0DC525B21E7D00F4158F /* Resources */,
-				877A234A8DCEF2C66907DE65 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -376,7 +381,6 @@
 				5BEE0DE425B21E7E00F4158F /* Sources */,
 				5BEE0DE525B21E7E00F4158F /* Frameworks */,
 				5BEE0DE625B21E7E00F4158F /* Resources */,
-				84FB82FD7F298A753793DAF6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -481,40 +485,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84FB82FD7F298A753793DAF6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe-PersonalRecipeUITests/Pods-PersonalRecipe-PersonalRecipeUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe-PersonalRecipeUITests/Pods-PersonalRecipe-PersonalRecipeUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe-PersonalRecipeUITests/Pods-PersonalRecipe-PersonalRecipeUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		877A234A8DCEF2C66907DE65 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe/Pods-PersonalRecipe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe/Pods-PersonalRecipe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalRecipe/Pods-PersonalRecipe-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8DA6FB2BCBFD752A003CE4FA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -569,6 +539,8 @@
 				5BEE0E2F25B2230600F4158F /* Strings+Extension.swift in Sources */,
 				5BEE0E2E25B2230600F4158F /* UIAlertController+Extension.swift in Sources */,
 				5BEE0E4825B2231800F4158F /* AlertViewModel.swift in Sources */,
+				5B955C4825F2D12A005B9669 /* ImageView+Exension.swift in Sources */,
+				5B79EF3025F589710090AD8B /* RecipeCellViewModel.swift in Sources */,
 				5BEE0E3225B2230600F4158F /* Endpoint.swift in Sources */,
 				5BEE0E1725B222F600F4158F /* Recipe.swift in Sources */,
 				5BEE0E4625B2231800F4158F /* HeaderViewModel.swift in Sources */,

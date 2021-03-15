@@ -9,7 +9,8 @@
 import Foundation
 
 protocol ServiceManagerType {
-    func makeRequest<T: Decodable>(path: String, completionHandler: @escaping(Result<T, APIError>) -> Void)
+    func getRequest<T: Decodable>(path: String, completionHandler: @escaping(Result<T, APIError>) -> Void)
+    func postRequest<T: Decodable>(path: String, body: Recipe, completionHandler: @escaping(Result<T, APIError>) -> Void)
 }
 
 class ServiceManager: ServiceManagerType {
@@ -19,12 +20,29 @@ class ServiceManager: ServiceManagerType {
         self.urlSession = urlSession
     }
     
-    func makeRequest<T>(path: String, completionHandler: @escaping (Result<T, APIError>) -> Void) where T : Decodable {
+    func getRequest<T>(path: String, completionHandler: @escaping (Result<T, APIError>) -> Void) where T : Decodable {
         guard let url = Endpoint.categories(path: path).url else {
             return
         }
+        serviceCall(URLRequest(url: url), completionHandler: completionHandler)
+    }
+    
+    func postRequest<T: Decodable>(path: String, body: Recipe, completionHandler: @escaping(Result<T, APIError>) -> Void) {
+        guard let url = Endpoint.categories(path: path).url else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body.recipeData()
         
-        urlSession.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
+        serviceCall(request, completionHandler: completionHandler)
+
+    }
+    
+    private func serviceCall<T: Decodable>(_ request: URLRequest,  completionHandler:  @escaping(Result<T, APIError>) -> Void) {
+        
+        urlSession.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
             // For testing Activity indicator
             sleep(5)
             

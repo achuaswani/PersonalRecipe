@@ -92,7 +92,7 @@ class RecipesViewController: UIViewController {
     }
     @objc private func addTapped() {
         let addNewRecipe = AddRecipeViewController()
-        self.present(addNewRecipe, animated: true, completion: nil)
+        self.present(UINavigationController(rootViewController: addNewRecipe), animated: true, completion: nil)
     }
     private func displayAlert(_ alertViewModel: AlertViewModel) {
         let alert = UIAlertController(alertViewModel: alertViewModel)
@@ -179,6 +179,16 @@ extension RecipesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.recipeSelected(at: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row >= viewModel.currentRow - 1 {
+           viewModel.updateNextSet()
+        }
+    }
+    
+    @objc private func refreshCollectionView() {
+        viewModel.updateNextSet()
+    }
 }
 
 extension RecipesViewController: UICollectionViewDelegateFlowLayout {
@@ -191,7 +201,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
                           height: collectionView.frame.size.width/2.8)
         } else {
             return CGSize(width: collectionView.frame.size.width/2.2,
-                          height: collectionView.frame.size.width/1.9)
+                          height: collectionView.frame.size.width/1.7)
         }
         
     }

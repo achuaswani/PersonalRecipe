@@ -18,4 +18,5 @@ struct AppConstants {
     #endif
 
     static let RECIPES = "/api/recipes"
+    static let ADDRECIPE = "/api/recipes/add"
 }
