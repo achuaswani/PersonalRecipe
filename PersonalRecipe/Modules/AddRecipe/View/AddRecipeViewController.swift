@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     private var recipeTitle = UITextField()
@@ -19,12 +20,26 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     private var viewModel: AddRecipeViewModel = {
         return AddRecipeViewModel()
     }()
+    private var subscriptions = Set<AnyCancellable>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
         applyStyle()
         setUpLayout()
         registerClosure()
+        setupBindings()
+    }
+    
+    private func setupBindings() {
+        subscriptions = [
+            viewModel.$title
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.text, on: recipeTitle),
+            viewModel.$description
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.text, on: recipeDescription)
+        ]
     }
     
     private func registerClosure() {
@@ -37,39 +52,44 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = viewModel.navigationBarTitle
         
         recipeTitle.textColor = .black
-        recipeTitle.placeholder = viewModel.addRecipeTitlePlaceholder
+        recipeTitle.placeholder = viewModel.recipeTitlePlaceholder
         recipeTitle.isSecureTextEntry = false
         recipeTitle.delegate = self
         recipeTitle.accessibilityIdentifier = "recipeTitle"
+        recipeTitle.text = viewModel.title
         
         recipeDescription.textColor = .black
-        recipeDescription.placeholder = viewModel.addDescriptionPlaceholder
+        recipeDescription.placeholder = viewModel.descriptionPlaceholder
         recipeDescription.isSecureTextEntry = false
         recipeDescription.delegate = self
         recipeDescription.accessibilityIdentifier = "recipeDescription"
+        recipeDescription.text = viewModel.description
         
         //recipeImageView.image =  UIImage(named: "login")!
         recipeImageView.accessibilityIdentifier = "recipeImageView"
         
         recipeIngredients.textColor = .black
-        recipeIngredients.placeholder = viewModel.addIngredientsPlaceholder
+        recipeIngredients.placeholder = viewModel.ingredientsPlaceholder
         recipeIngredients.isSecureTextEntry = false
         recipeIngredients.delegate = self
         recipeIngredients.accessibilityIdentifier = "recipeIngredients"
+        recipeIngredients.text = viewModel.ingredients
         
         recipeSteps.textColor = .black
-        recipeSteps.placeholder = viewModel.addStepsPlaceholder
+        recipeSteps.placeholder = viewModel.stepsPlaceholder
         recipeSteps.isSecureTextEntry = false
         recipeSteps.delegate = self
         recipeSteps.accessibilityIdentifier = "recipeSteps"
+        recipeSteps.text = viewModel.steps
         
         recipeTips.textColor = .black
-        recipeTips.placeholder = viewModel.addTipsPlaceholder
+        recipeTips.placeholder = viewModel.tipsPlaceholder
         recipeTips.isSecureTextEntry = false
         recipeTips.delegate = self
         recipeTips.accessibilityIdentifier = "recipeTips"
+        recipeTips.text = viewModel.tips
 
-        addRecipeButton.setTitle(viewModel.addRecipeButtonTitle, for: .normal)
+        addRecipeButton.setTitle(viewModel.recipeButtonTitle, for: .normal)
         addRecipeButton.setTitleColor(.blue, for: .normal)
         addRecipeButton.contentMode = .scaleAspectFit
         addRecipeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
@@ -115,18 +135,7 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func refreshButtonTapped() {
-        let recipe = Recipe(
-            title: "test",
-            category: "test",
-            description: "test",
-            image: "test",
-            ingredients: "test",
-            steps: recipeSteps.text,
-            tips: recipeTips.text,
-            author: "Test",
-            dateTime: "Test"
-        )
-        viewModel.buttonAction(recipe)
+        viewModel.buttonAction()
     }
     
     private func displayEmptyMessageView(for: ErrorViewModel) {

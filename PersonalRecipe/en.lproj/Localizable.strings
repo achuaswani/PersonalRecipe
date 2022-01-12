@@ -22,11 +22,13 @@
 "service.request.try.again" = "Please try again!";
 "service.request.session.timeout" = "Session timeout.";
 "service.request.page.not.found" = "Page not found.";
+"add.recipe.enter.all" = "Enter all mandatory fields";
 
 // MARK: - Add Recipe
 "add.recipe.header.title" = "Add New Recipe";
 "add.recipe.title.placeholder" = "Recipe title";
 "add.recipe.description.placeholder" = "Recipe description";
-"add.recipe.tips.placeholder" = "tips";
+"add.recipe.tips.placeholder" = "Enter tips";
+"add.recipe.steps.placeholder" = "Enter steps";
 "add.recipe.ingredients.placeholder" = "Recipe ingredients";
 "add.recipe.button.title" = "Add Recipe";

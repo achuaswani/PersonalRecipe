@@ -7,12 +7,26 @@ DerivedData
 *.xcscmblueprint
 IDEWorkspaceChecks.plist
 
-# cocoapods
-Pods
-Podfile.lock
+# Swift Package Manager
+Packages/
+Package.pins
 
 # iTunes connect packages
 Package.itmsp
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+
+# fastlane
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
 
 # app key
 GoogleService-Info.plist

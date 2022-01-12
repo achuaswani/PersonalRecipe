@@ -17,7 +17,8 @@ struct Recipe: Decodable, Encodable {
     let steps: String?
     let tips: String?
     let author: String?
-    let dateTime: String?
+    var dateTime: String? = Date().debugDescription
+    
     func recipeData() -> Data? {
         let recipeDictionary =  [
             "id": self.id,

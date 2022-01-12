@@ -8,7 +8,7 @@
 
 struct ErrorViewModel {
     var title: String
-    var subTitle: String
+    var subTitle: String? = ""
     var buttonTitle: String
     var buttonAction: () -> Void
 }
